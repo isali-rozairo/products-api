@@ -14,6 +14,7 @@ import java.util.List;
         @Autowired
         private ProductService productService;
 
+        @GetMapping()
         public List<Product> getAllProducts() {
             return productService.getAllProducts();
         }
@@ -21,20 +22,20 @@ import java.util.List;
 
         @GetMapping("/{id}")
         public Product getById(@PathVariable Long id) {
-            return productService.getById(id).orElseThrow( ()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            return productService.getById(id).orElse(null);
         }
 
-        @PostMapping
+        @PostMapping()
         public Product addProduct(@RequestBody Product product) {
             return productService.addProduct(product);
         }
 
-        @DeleteMapping
+        @DeleteMapping("/{id}")
         public void deleteProductById(@PathVariable Long id) {
             productService.deleteById(id);
         }
 
-        @GetMapping
+        @GetMapping("/search")
         public List<Product> search(String name) {
             return productService.findByName(name);
 
